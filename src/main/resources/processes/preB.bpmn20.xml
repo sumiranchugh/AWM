@@ -1,0 +1,170 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef" xmlns:modeler="http://activiti.com/modeler" modeler:version="1.0ev" modeler:exportDateTime="20160323122103" modeler:modelId="977650" modeler:modelVersion="1" modeler:modelLastUpdated="1458735657795">
+  <process id="PreB" name="PreB" isExecutable="true">
+    <extensionElements>
+      <modeler:executionvariables xmlns:modeler="http://activiti.com/modeler" modeler:variableName="formLink" modeler:variableType="string"/>
+      <modeler:executionvariables xmlns:modeler="http://activiti.com/modeler" modeler:variableName="approval" modeler:variableType="string"/>
+    </extensionElements>
+    <startEvent id="startEvent1" activiti:initiator="initiator">
+      <extensionElements>
+        <activiti:formProperty id="formLink" name="formlink" type="string" variable="formLink" required="true"/>
+      </extensionElements>
+    </startEvent>
+    <userTask id="sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0" name="centreapproval" activiti:candidateGroups="sewasamiti" >
+        <documentation>
+            ${initiator} has submitted a new request. Details: ${formlink}
+        </documentation>
+        <extensionElements>
+        <activiti:formProperty id="centerapproval" name="Approval" type="enum" variable="approval" required="true">
+        <activiti:value id="A" name="Approve" />
+        <activiti:value id="R" name="Reject" />
+        </activiti:formProperty>
+        <modeler:allow-send-email>true</modeler:allow-send-email>
+        <modeler:duedate-type>fixed</modeler:duedate-type>
+        <modeler:duedate-days>7</modeler:duedate-days>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-D4A9D776-E02B-4707-A9E9-FF4A2716A702" sourceRef="startEvent1" targetRef="sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0"/>
+    <exclusiveGateway id="sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9"/>
+    <userTask id="sid-0B17B033-53A4-4E4C-BE12-52C52C49E205" name="Sec Approval" activiti:candidateGroups="sewasamiti" >
+      <extensionElements>
+        <activiti:formProperty id="areaapproval" name="approval" type="enum" variable="approval" required="true">
+        <activiti:value id="R" name="Permanent Reject" />
+        <activiti:value id="A" name="Approve" />
+        <activiti:value id="T" name="Reject" />
+        </activiti:formProperty>
+        <modeler:allow-send-email>true</modeler:allow-send-email>
+        <modeler:duedate-type>fixed</modeler:duedate-type>
+        <modeler:duedate-hours>1</modeler:duedate-hours>
+      </extensionElements>
+    </userTask>
+    <sequenceFlow id="sid-DDDC11EE-A994-418D-B4CD-B1400CB019F9" sourceRef="sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9" targetRef="sid-E78E6877-2FDA-461A-82E5-EE55DA412CC6">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:leftRestResponseId="centerapproval" modeler:rightValue="R" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"> ${centerapproval == 'R'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-9C24F925-8FAD-495A-903C-F4219E3321C9" sourceRef="sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9" targetRef="sid-0B17B033-53A4-4E4C-BE12-52C52C49E205">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:leftRestResponseId="centerapproval" modeler:rightValue="A" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"> ${centerapproval == 'A'}</conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway id="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691"/>
+    <sequenceFlow id="sid-020A7FD7-27E2-4E85-AC11-A304AFC91319" sourceRef="sid-0B17B033-53A4-4E4C-BE12-52C52C49E205" targetRef="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691"/>
+    <endEvent id="sid-FF1FDEF0-CE1C-48BB-91B6-F0A5D451B981"/>
+    <serviceTask id="sid-EFEDB527-0045-48E8-B369-44771F686C72" activiti:async="true" activiti:class="com.activiti.runtime.activiti.RestCallDelegate">
+      <extensionElements>
+        <activiti:field name="repositoryService">
+          <activiti:expression><![CDATA[${repositoryService}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="endpointService">
+          <activiti:expression><![CDATA[${endpointService}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="formRepository">
+          <activiti:expression><![CDATA[${formRepository}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="runtimeAppDeploymentRepository">
+          <activiti:expression><![CDATA[${runtimeAppDeploymentRepository}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="relatedContentService">
+          <activiti:expression><![CDATA[${relatedContentService}]]></activiti:expression>
+        </activiti:field>
+        <activiti:field name="restUrl">
+          <activiti:string><![CDATA[http://localhost:8080/processComp]]></activiti:string>
+        </activiti:field>
+        <activiti:field name="httpMethod">
+          <activiti:string><![CDATA[GET]]></activiti:string>
+        </activiti:field>
+        <modeler:request-mapping modeler:jsonPropertyName="approvalStatus" modeler:jsonPropertyType="string" modeler:jsonPropertyValueRestResponseField="approval"/>
+      </extensionElements>
+    </serviceTask>
+    <sequenceFlow id="sid-49B97381-DDA6-422D-8FA0-E8D321CFB2BE" sourceRef="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691" targetRef="sid-EFEDB527-0045-48E8-B369-44771F686C72">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:leftRestResponseId="areaapproval" modeler:rightValue="A" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression"> ${areaapproval == 'A'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-96C65D96-CED0-485A-898B-B9D8B6C39386" sourceRef="sid-EFEDB527-0045-48E8-B369-44771F686C72" targetRef="sid-FF1FDEF0-CE1C-48BB-91B6-F0A5D451B981"/>
+    <sequenceFlow id="sid-7DE9CCA6-0E75-46B4-9A31-FA74C42BE891" sourceRef="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691" targetRef="sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:leftRestResponseId="areaapproval" modeler:rightValue="TR" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${areaapproval == 'TR'}</conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="sid-15A29BCF-204E-4EE4-884F-ADFF0EC457EC" sourceRef="sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0" targetRef="sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9"/>
+    <endEvent id="sid-E78E6877-2FDA-461A-82E5-EE55DA412CC6"/>
+    <sequenceFlow id="sid-7D53B8FA-C168-4FF4-A214-8CB6DFC8B967" sourceRef="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691" targetRef="sid-E78E6877-2FDA-461A-82E5-EE55DA412CC6">
+      <extensionElements>
+        <modeler:conditionDefinition modeler:index="0" modeler:leftRestResponseId="areaapproval" modeler:rightValue="R" modeler:operator="=="/>
+      </extensionElements>
+      <conditionExpression xsi:type="tFormalExpression">${areaapproval == 'R'}</conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_PreB">
+    <bpmndi:BPMNPlane bpmnElement="PreB" id="BPMNPlane_PreB">
+      <bpmndi:BPMNShape bpmnElement="startEvent1" id="BPMNShape_startEvent1">
+        <omgdc:Bounds height="30.0" width="30.0" x="100.0" y="163.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0" id="BPMNShape_sid-8EB9A065-08FE-481C-9AA0-FE50D388D6B0">
+        <omgdc:Bounds height="113.0" width="109.0" x="165.0" y="135.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9" id="BPMNShape_sid-7FBE2FAC-16AB-473E-BEBF-5C432DCD4FF9">
+        <omgdc:Bounds height="40.0" width="40.0" x="390.0" y="174.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-0B17B033-53A4-4E4C-BE12-52C52C49E205" id="BPMNShape_sid-0B17B033-53A4-4E4C-BE12-52C52C49E205">
+        <omgdc:Bounds height="80.0" width="100.0" x="475.0" y="154.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691" id="BPMNShape_sid-2CFA1710-9B02-4D3E-8B90-BB8D35875691">
+        <omgdc:Bounds height="40.0" width="40.0" x="620.0" y="174.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-FF1FDEF0-CE1C-48BB-91B6-F0A5D451B981" id="BPMNShape_sid-FF1FDEF0-CE1C-48BB-91B6-F0A5D451B981">
+        <omgdc:Bounds height="28.0" width="28.0" x="900.0" y="180.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-EFEDB527-0045-48E8-B369-44771F686C72" id="BPMNShape_sid-EFEDB527-0045-48E8-B369-44771F686C72">
+        <omgdc:Bounds height="80.0" width="100.0" x="720.0" y="151.5"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="sid-E78E6877-2FDA-461A-82E5-EE55DA412CC6" id="BPMNShape_sid-E78E6877-2FDA-461A-82E5-EE55DA412CC6">
+        <omgdc:Bounds height="28.0" width="28.0" x="405.0" y="31.0"/>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="sid-D4A9D776-E02B-4707-A9E9-FF4A2716A702" id="BPMNEdge_sid-D4A9D776-E02B-4707-A9E9-FF4A2716A702">
+        <omgdi:waypoint x="129.87637641012418" y="179.92182853145144"/>
+        <omgdi:waypoint x="165.0" y="184.45933014354068"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-020A7FD7-27E2-4E85-AC11-A304AFC91319" id="BPMNEdge_sid-020A7FD7-27E2-4E85-AC11-A304AFC91319">
+        <omgdi:waypoint x="575.0" y="194.7164502164502"/>
+        <omgdi:waypoint x="620.4130434782609" y="194.91304347826087"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-96C65D96-CED0-485A-898B-B9D8B6C39386" id="BPMNEdge_sid-96C65D96-CED0-485A-898B-B9D8B6C39386">
+        <omgdi:waypoint x="820.0" y="192.54166666666669"/>
+        <omgdi:waypoint x="900.0030372058064" y="194.2083966084543"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-49B97381-DDA6-422D-8FA0-E8D321CFB2BE" id="BPMNEdge_sid-49B97381-DDA6-422D-8FA0-E8D321CFB2BE">
+        <omgdi:waypoint x="659.4806420921468" y="195.01935790785316"/>
+        <omgdi:waypoint x="720.0" y="195.08108016930382"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-7D53B8FA-C168-4FF4-A214-8CB6DFC8B967" id="BPMNEdge_sid-7D53B8FA-C168-4FF4-A214-8CB6DFC8B967">
+        <omgdi:waypoint x="628.3360655737705" y="186.1639344262295"/>
+        <omgdi:waypoint x="447.5130514604432" y="54.81136757032191"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-7DE9CCA6-0E75-46B4-9A31-FA74C42BE891" id="BPMNEdge_sid-7DE9CCA6-0E75-46B4-9A31-FA74C42BE891">
+        <omgdi:waypoint x="622.4158878504672" y="196.9158878504673"/>
+        <omgdi:waypoint x="274.0" y="233.828165374677"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-DDDC11EE-A994-418D-B4CD-B1400CB019F9" id="BPMNEdge_sid-DDDC11EE-A994-418D-B4CD-B1400CB019F9">
+        <omgdi:waypoint x="411.8333333333333" y="176.33333333333334"/>
+        <omgdi:waypoint x="419.3956707251874" y="70.46060984737639"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-9C24F925-8FAD-495A-903C-F4219E3321C9" id="BPMNEdge_sid-9C24F925-8FAD-495A-903C-F4219E3321C9">
+        <omgdi:waypoint x="429.5833333333333" y="194.91666666666666"/>
+        <omgdi:waypoint x="475.0" y="194.7183406113537"/>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="sid-15A29BCF-204E-4EE4-884F-ADFF0EC457EC" id="BPMNEdge_sid-15A29BCF-204E-4EE4-884F-ADFF0EC457EC">
+        <omgdi:waypoint x="274.0" y="191.5"/>
+        <omgdi:waypoint x="332.0" y="191.5"/>
+        <omgdi:waypoint x="332.0" y="194.5"/>
+        <omgdi:waypoint x="390.0" y="194.5"/>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
