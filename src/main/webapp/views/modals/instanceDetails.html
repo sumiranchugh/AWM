@@ -5,7 +5,7 @@
 <div class="modal-body">
     <div class="row ">
         <div class="col-xs-12 ">
-            <span class="">Started</span> <span am-time-ago="instance.details.startTime"></span> by <strong>{{instance.details.startUserId}}</strong>
+            <span class="">Started</span> <span am-time-ago="instance.details.startTime"></span> by <strong>{{ startuser }}</strong>
       <span ng-switch on="instance.details">
                 <span ng-switch-when="instance.details.completed">
                currently <bold>completed</bold>
@@ -30,12 +30,12 @@
                     <th>Created</th>
                     <th>Completed</th>
                 </tr>
-                <tr ng-repeat="task in instance.details.tasks">
-                    <td>{{task.taskName}}</td>
-                    <td>{{task.assignee}}</td>
+                <tr ng-repeat="task in instance.tasks.data">
+                    <td>{{task.name}}</td>
+                    <td>{{task.assignee==null? task.candidates : task.assignee}}</td>
                     <td am-time-ago="task.dueDate"></td>
-                    <td am-time-ago="task.startTime"></td>
-                    <td>{{task.completed}}</td>
+                    <td am-time-ago="task.createTime"></td>
+                    <td>{{task.delegationState ==null ? "NO" : task.delegationState}}</td>
                 </tr>
             </table>
         </div>
@@ -51,9 +51,9 @@
                     <th>Value</th>
 
                 </tr>
-                <tr ng-repeat="variable in instance.details.variables">
-                    <td>{{variable.variableName}}</td>
-                    <td>{{variable.variableValue}}</td>
+                <tr ng-repeat="variable in instance.variables">
+                    <td>{{variable.name}}</td>
+                    <td>{{variable.value}}</td>
                 </tr>
             </table>
         </div>

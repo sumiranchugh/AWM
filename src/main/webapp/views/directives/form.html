@@ -8,6 +8,23 @@
                        type="text" class="form-control" placeholder="{{item.name}}"
                        ng-model="taskDetailed.propertyForSaving[item.id].value">
 
+                <input ng-if="item.type=='attachment' && item.writable==true" ng-visible="item.readable"
+                       ng-disabled="{{item.writable == false}}" ng-required="item.required"
+                       type="text" class="form-control" placeholder="{{item.name}}"
+                       ng-model="taskDetailed.propertyForSaving[item.id].value">
+
+                <!--<div class="wrapper" ng-if="item.type=='attachment' && item.writable==false" ng-controller="DocCtrl">
+                    <h1 ng-model="pdfUrl"> {{ item.value }}</h1>
+
+                    <ng-pdf template-url="views/directives/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>
+                </div>
+-->
+                <div class="wrapper" ng-if="item.type=='attachment' && item.writable==false" >
+                    <input ng-model="taskDetailed.propertyForSaving[item.id].value" ng-required="item.required" type="text" style="display: none;">
+                    <h1 ng-model="taskDetailed.propertyForSaving[item.id].name"> {{ item.name }}</h1>
+                <a ng-href="{{ item.value}}" target="_blank" ng-model="taskDetailed.propertyForSaving[item.id].value">Open  Attachment</a>
+
+                </div>
 
                 <input ng-if="item.type=='long'" ng-visible="item.readable" ng-enabled="item.writable"
                        ng-required="item.required"

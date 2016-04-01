@@ -4,15 +4,15 @@
             <div class="well well-sm">
                 <form class="form-horizontal" action="" method="post">
                     <fieldset>
-                        <legend class="text-center">{{loggedUser.firstName}}</legend>
+                        <legend class="text-user">{{loggedUser.username}}</legend>
 
                         <!-- Name input-->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="name">First Name</label>
+                            <label class="col-md-4 control-label" for="name">User Name</label>
 
                             <div class="col-md-8">
                                 <input id="name" name="name" type="text" placeholder="Your name" class="form-control"
-                                       ng-model="loggedUser.firstName" ng-disabled="true">
+                                       ng-model="loggedUser.username" ng-disabled="true">
                             </div>
                         </div>
 
@@ -46,7 +46,7 @@
         <div class="col-md-8 ">
             <div class="well well-sm">
                 <fieldset>
-                    <legend class="text-center">Dashboard</legend>
+                    <legend class="text-user">Dashboard</legend>
                     <div class="form-group">
                         <label class="col-md-3 control-label" for="name">Number of tasks</label>
 

@@ -2,7 +2,7 @@
     <div class="row row action-row">
 
 
-        <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2">
+        <div class="col-xs-3 col-sm-2 col-md-2 col-lg-2" ng-show="any">
             <div class="btn-group" dropdown>
                 <a href class="dropdown-toggle">
                    <span
@@ -25,9 +25,9 @@
                 <ul class="dropdown-menu text-left ">
                     <li ng-class="{selected: tasksType=='assignee'}"><a ng-click="loadTasksType('assignee')">My tasks</a></li>
                     <li ng-class="{selected: tasksType=='owned'}"><a ng-click="loadTasksType('owned')">Owned</a></li>
-                    <li ng-class="{selected: tasksType=='involved'}"><a
+                    <li ng-class="{selected: tasksType=='involved'}" ng-show="any"><a
                             ng-click="loadTasksType('involved')">Involved</a></li>
-                    <li ng-class="{selected: tasksType=='unassigned'}"><a ng-click="loadTasksType('unassigned')">Unassigned</a>
+                    <li ng-class="{selected: tasksType=='unassigned'}" ng-show="any"><a ng-click="loadTasksType('unassigned')">Unassigned</a>
                     </li>
                     <li ng-class="{selected: tasksType=='candidate'}"><a ng-click="loadTasksType('candidate')">Candidate User</a>
                     </li>
@@ -50,7 +50,7 @@
 
     <div class="table-holder">
 
-        <div ng-show="tasks.data.length==0" class="text-center">No tasks here!</div>
+        <div ng-show="tasks.data.length==0" class="text-user">No tasks here!</div>
 
         <div class="row user-row" ng-repeat="task in tasks.data | filter:query" ng-click="loadTask(task)"
              priority="{{task.priority}}"
