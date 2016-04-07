@@ -1,14 +1,14 @@
 angular.module('activitiApp').controller('ProcessesCtrl', function ($scope, $rootScope, $location, ProcessDefinitionService, ProcessInstanceService, FormDataService, $modal, moment, TasksModalService) {
-    if((typeof $rootScope.loggedin== 'undefined' ||$rootScope.loggedin==false) && !$rootScope.validateUser()){
+   /* if((typeof $rootScope.loggedin== 'undefined' ||$rootScope.loggedin==false) && !$rootScope.validateUser()){
         $location.path('/login');
 
-    }
+    }*/
 
     $scope.loadDefinitions = function () {
         $scope.processes = ProcessDefinitionService.get({latest: "true"});
     }
 
-    $scope.loadDefinitions();
+  //  $scope.loadDefinitions();
 
     $scope.startTheProcess = function (processDefinition) {
 
@@ -30,4 +30,16 @@ angular.module('activitiApp').controller('ProcessesCtrl', function ($scope, $roo
     }
 
     $scope.query = "";
+
+    $rootScope.validateUser.then(function(){
+        if(!$rootScope.loggedin)
+            $location.path('/login');
+        else
+            $scope.loadDefinitions($rootScope.any);
+
+    },function(){
+        consolelog("in task then fail");
+        $location.path('/login');
+
+    });
 });

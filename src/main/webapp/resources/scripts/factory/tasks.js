@@ -13,4 +13,10 @@ angular.module('activitiApp').factory('TasksIdentityService', function ($resourc
     return data;
 });
 
+
+angular.module('activitiApp').factory('TasksSubmitService', function ($resource) {
+    var data = $resource('runtime/tasks/submit/:taskId', {taskId: "@taskId"});
+    return data;
+});
+
 //http://localhost:8080//runtime/tasks/40025/identitylinks

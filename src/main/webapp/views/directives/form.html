@@ -13,15 +13,14 @@
                        type="text" class="form-control" placeholder="{{item.name}}"
                        ng-model="taskDetailed.propertyForSaving[item.id].value">
 
-                <!--<div class="wrapper" ng-if="item.type=='attachment' && item.writable==false" ng-controller="DocCtrl">
-                    <h1 ng-model="pdfUrl"> {{ item.value }}</h1>
+               <!-- <div class="wrapper" ng-if="item.type=='attachment' && item.writable==false" >
+                    <a href="{{item.value}}" target="_blank"> {{ item.value }}</a>
 
-                    <ng-pdf template-url="views/directives/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>
-                </div>
--->
+                    &lt;!&ndash;<ng-pdf template-url="views/directives/viewer.html" canvasid="pdf" scale="page-fit"></ng-pdf>&ndash;&gt;
+                </div>-->
                 <div class="wrapper" ng-if="item.type=='attachment' && item.writable==false" >
                     <input ng-model="taskDetailed.propertyForSaving[item.id].value" ng-required="item.required" type="text" style="display: none;">
-                    <h1 ng-model="taskDetailed.propertyForSaving[item.id].name"> {{ item.name }}</h1>
+                   <!-- <h1 ng-model="taskDetailed.propertyForSaving[item.id].name"> {{ item.name }}</h1>-->
                 <a ng-href="{{ item.value}}" target="_blank" ng-model="taskDetailed.propertyForSaving[item.id].value">Open  Attachment</a>
 
                 </div>
@@ -32,10 +31,14 @@
                        ng-model="taskDetailed.propertyForSaving[item.id].value">
 
 
-
-
                 <input ng-if="item.type=='boolean'" ng-visible="item.readable" ng-enabled="item.writable"
 
+                       type="checkbox" class="form-control" placeholder="{{item.name}}"
+
+                       ng-model="taskDetailed.propertyForSaving[item.id].value" style="width:16px;">
+
+                <input ng-if="item.type=='approvereject'" ng-visible="item.readable" ng-enabled="item.writable"
+                       value="{{taskDetailed.propertyForSaving[item.id].value == null ? taskDetailed.propertyForSaving[item.id].value=false : taskDetailed.propertyForSaving[item.id].value}}"
                        type="checkbox" class="form-control" placeholder="{{item.name}}"
                        ng-model="taskDetailed.propertyForSaving[item.id].value" style="width:16px;">
 
@@ -95,4 +98,12 @@
                 </div>
 
             </div>
+
+
         </div>
+       <div class="row taskForm" ng-show="{{taskDetailed.taskDefinitionKey != null}}">
+        <div class=" form-group "  >
+            <label for="comments" >Comments:</label>
+            <textarea id="comments" ng-model="taskDetailed.comments" type="text" class="col-lg-12"/>
+        </div>
+       </div>

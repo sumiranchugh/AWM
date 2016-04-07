@@ -1,4 +1,6 @@
-angular.module('activitiApp').controller("TasksCtrl", function ($scope, $rootScope, $location, ValidateUserService,TasksService, FormDataService, moment, $modal, TasksModalService, ProcessDefinitionService, GroupService) {
+angular.module('activitiApp').controller("TasksCtrl", function ($scope, $rootScope, $location, ValidateUserService,
+                                                                TasksService, FormDataService, moment, $modal,
+                                                                TasksModalService, ProcessDefinitionService, GroupService) {
 /*    if((typeof $rootScope.loggedin== 'undefined' ||$rootScope.loggedin==false) ){
         $rootScope.validateUser.then(function(){
             if(!$rootScope.loggedin)
@@ -102,10 +104,11 @@ angular.module('activitiApp').controller("TasksCtrl", function ($scope, $rootSco
     $rootScope.validateUser.then(function(){
             if(!$rootScope.loggedin)
                 $location.path('/login');
-           else
+           else {
                 $scope.loadUserGroups();
-            $scope.loadTasks();
-            $scope.loadDefinitions();
+                $scope.loadTasks();
+                $scope.loadDefinitions();
+            }
 
 
         }, function(){

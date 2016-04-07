@@ -1,7 +1,9 @@
 package org.rssb.awm.confg;
 
 import org.activiti.engine.form.AbstractFormType;
+import org.activiti.engine.impl.history.HistoryLevel;
 import org.activiti.spring.SpringProcessEngineConfiguration;
+import org.rssb.awm.processes.formtypes.ApproveRejectFormType;
 import org.rssb.awm.processes.formtypes.AttachmentFormType;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
@@ -28,8 +30,9 @@ public class ActivitiConfig {
             @Override
             public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
                 if (bean instanceof SpringProcessEngineConfiguration) {
-                    List<AbstractFormType> customFormTypes = Arrays.<AbstractFormType>asList(new AttachmentFormType());
+                    List<AbstractFormType> customFormTypes = Arrays.<AbstractFormType>asList(new AttachmentFormType(), new ApproveRejectFormType());
                     ((SpringProcessEngineConfiguration)bean).setCustomFormTypes(customFormTypes);
+                    ((SpringProcessEngineConfiguration)bean).setHistoryLevel(HistoryLevel.FULL);
                 }
                 return bean;
             }

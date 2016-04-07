@@ -1,4 +1,4 @@
-angular.module('activitiApp').factory('TasksModalService', function ($modal, FormDataService, TasksService, $rootScope,UserService,ProcessInstanceService,ProcessInstancesService) {
+angular.module('activitiApp').factory('TasksModalService', function ($modal, FormDataService,TasksSubmitService, TasksService, $rootScope,UserService,ProcessInstanceService,ProcessInstancesService) {
 
     var ModalInstanceCtrl = function ($scope, $modalInstance, moment, taskDetailed) {
         $scope.taskDetailed = taskDetailed;
@@ -73,15 +73,23 @@ angular.module('activitiApp').factory('TasksModalService', function ($modal, For
         }
 
         $scope.finish = function (detailedTask) {
-
+          //  $scope.assignMe(detailedTask);
             if (typeof detailedTask.propertyForSaving != "undefined") {
                 var objectToSave = extractDataFromForm(detailedTask);
 
-                var saveForm = new FormDataService(objectToSave);
-                saveForm.$save(function () {
+                taskDetailed.properties= objectToSave.properties;
+                taskDetailed.assignee=$rootScope.UserId;
+
+                var saveForm = new TasksSubmitService(taskDetailed);
+                saveForm.$save({"taskId": detailedTask.id},function () {
                     emitRefresh();
                     $modalInstance.dismiss('cancel');
                 });
+                /*var saveForm = new FormDataService(objectToSave);
+                saveForm.$save(function () {
+                    emitRefresh();
+                    $modalInstance.dismiss('cancel');
+                });*/
             } else {
                 var action = new TasksService();
                 action.action = "complete";
@@ -116,7 +124,7 @@ angular.module('activitiApp').factory('TasksModalService', function ($modal, For
 
 
         $scope.assignMe = function (detailedTask) {
-            var taskToEdit = new TasksService({"assignee": $rootScope.username});
+            var taskToEdit = new TasksService({"assignee": $rootScope.UserId});
             taskToEdit.$update({"taskId": detailedTask.id}, function () {
                 emitRefresh();
             });

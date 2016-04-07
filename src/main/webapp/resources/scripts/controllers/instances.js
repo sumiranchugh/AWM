@@ -1,5 +1,6 @@
-angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $rootScope, $location,  $modal, moment,TasksService,
-                                                                    ProcessInstancesQueryService,ProcessInstancesService,ProcessInstanceService,
+angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $rootScope, $location,  $modal,TasksService,moment,
+                                                                    ProcessInstancesQueryService,
+                                                                    ProcessInstanceInfoService,ProcessInstancesService,ProcessInstanceService,
                                                                     ProcessDefinitionService,TasksIdentityService) {
 
 
@@ -70,7 +71,7 @@ angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $roo
 
 
         $scope.startuser="unknown";
-        $scope.instance.details = ProcessInstancesService.get({processInstance:instance.id, returnProcessVariables:true});
+        $scope.instance.details = ProcessInstanceInfoService.get({processInstance:instance.id, returnProcessVariables:true});
 
         $scope.instance.tasks = TasksService.tasksforprocess({processInstance:instance.id});
 
@@ -124,7 +125,14 @@ angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $roo
     $scope.query = "";
 
     $rootScope.validateUser.then(function(){
+        if(!$rootScope.loggedin)
+            $location.path('/login');
+        else
         $scope.loadDefinitions($rootScope.any);
+
+    },function(){
+        consolelog("in task then fail");
+        $location.path('/login');
 
     });
 });

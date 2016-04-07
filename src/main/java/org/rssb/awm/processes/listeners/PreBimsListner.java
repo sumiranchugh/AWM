@@ -13,10 +13,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.*;
 
 /**
@@ -58,30 +57,39 @@ public class PreBimsListner {
     RepositoryService repositoryService;
 
     public void notifyBims(DelegateTask task, String eventName) {
-        Map<String, Object> params = new HashMap<>();
+        Map<String, String> params = new HashMap<>();
         params.put("processInstanceId", task.getProcessInstanceId());
         params.put("processDefinitionId", task.getProcessDefinitionId());
-        params.putAll(task.getVariables());
+     //   params.putAll(task.getVariables());
 
-        HttpEntity<String> entity = Util.addTokenToHeader(basicauthusername, basicauthpassword);
-        ResponseEntity<Object> response = restTemplate.exchange(fetchuserurl, HttpMethod.POST, entity, Object.class, params);
-        if (response.getStatusCode() != HttpStatus.OK) {
+        //HttpEntity<String> entity = Util.addTokenToHeader(basicauthusername, basicauthpassword);
+        /*MultiValueMap<String,String> m =new LinkedMultiValueMap<>();
+        m.put("Authorization", );
+        m.put("Accept")*/
+        HttpEntity<Map<String,String>> param = new HttpEntity<>(params,new LinkedMultiValueMap<>());
+        //restTemplate.put(notifyurl,params,params);
+        ResponseEntity<Object> response = restTemplate.exchange(notifyurl, HttpMethod.PUT, param, Object.class, params);
+       /* if (response.getStatusCode() != HttpStatus.OK) {
             throw new ActivitiException("Error notifying bims");
-        }
+        }*/
     }
 
     public void getCandidateUsers(DelegateTask task, String eventName, int level) {
 
-        try {
-            byte[] content= Util.loadFile((String)task.getVariable("attachment"));
-            taskService.createAttachment(attachmentType,task.getId(),task.getProcessInstanceId(),attachmentName,attachmentDesc,new ByteArrayInputStream(content));
+       /* try {
+
+           if( taskService.getTaskAttachments(task.getId())==null) {
+            runtimeService.
+               byte[] content = Util.loadFile((String) task.getVariable("attachment"));
+               taskService.createAttachment(attachmentType, task.getId(), task.getProcessInstanceId(), attachmentName, attachmentDesc, new ByteArrayInputStream(content));
+           }
         } catch (IOException e) {
             Map<String,Object> map =new HashMap<>();
             map.put("areapproval",new Boolean(false));
             map.put("sspproval",new Boolean(false));
             taskService.claim(task.getId(), "SYSTEM");
             taskService.complete(task.getId(),map);
-        }
+        }*/
 
         HttpEntity<String> entity = Util.addTokenToHeader(basicauthusername, basicauthpassword);
 

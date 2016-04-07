@@ -69,7 +69,7 @@ public class HomeController {
     public PreBimsListner.Users mapTest(){
         PreBimsListner.Users users = new PreBimsListner.Users();
         Set<String> set  = new HashSet<>();
-        set.add("user1");
+        set.add("G09663");
         set.add("user2");
         users.getMap().put("CENTER",set );
         users.getMap().put("AREA",set );
