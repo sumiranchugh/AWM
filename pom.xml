@@ -53,22 +53,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.thoughtworks.gauge.maven</groupId>
-                <artifactId>gauge-maven-plugin</artifactId>
-                <version>1.0.3</version>
-                <executions>
-                    <execution>
-                        <phase>test</phase>
-                        <configuration>
-                            <specsDir>specs</specsDir>
-                        </configuration>
-                        <goals>
-                            <goal>execute</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+
         </plugins>
        </build>
           <!--  <plugin>
@@ -120,7 +105,7 @@
 
                 <groupId>org.activiti</groupId>
                 <artifactId>activiti-spring-boot-starter-rest-api</artifactId>
-                <version>5.20.0-SNAPSHOT</version>
+                <version>5.19.0.2</version>
                 <!--<exclusions>
                     <exclusion>
                         <groupId>org.springframework.boot</groupId>
@@ -167,13 +152,7 @@
                 <version>3.1.0</version>
 
             </dependency>
-            <dependency>
-                <groupId>com.thoughtworks.gauge</groupId>
-                <artifactId>gauge-java</artifactId>
-                <version>0.2.2</version>
-                <scope>test</scope>
-            </dependency>
-        </dependencies>
+</dependencies>
 
 
     </project>

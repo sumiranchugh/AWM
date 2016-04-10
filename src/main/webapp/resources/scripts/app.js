@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('activitiApp', [ 'ngResource', 'ui.bootstrap', "ngRoute",'angularMoment','pdf'])
+angular.module('activitiApp', [ 'ngResource', 'ui.bootstrap', "ngRoute",'angularMoment'])
 
     // Temporary until we have a login page: always log in with kermit:kermit
 //    .config(['$httpProvider', function ($httpProvider) {
