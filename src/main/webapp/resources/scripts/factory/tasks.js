@@ -3,7 +3,7 @@ angular.module('activitiApp').factory('TasksService', function ($resource) {
         update: {method: 'PUT', params: {taskId: "@taskId"}},
         candidateTasks:{method: 'GET', params:{candidateUser:"@candidateUser"}},
         assignedTasks:{method: 'GET', params:{assignee:"@assignee"}},
-        tasksforprocess:{methos:'GET', params:{processInstanceId: "@processInstanceId"}}
+        tasksforprocess:{method:'GET', params:{processInstanceId: "@processInstanceId"}}
     });
     return data;
 });
@@ -19,4 +19,3 @@ angular.module('activitiApp').factory('TasksSubmitService', function ($resource)
     return data;
 });
 
-//http://localhost:8080//runtime/tasks/40025/identitylinks

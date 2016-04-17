@@ -7,8 +7,6 @@ angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $roo
 
     $scope.loadDefinitions = function (all) {
         if(!all) {
-
-            var id = {};
             var query = {
                 "variables": [{"name": "initiator", "value": $rootScope.UserId, "operation": "like", "type": "string"}],
                 "includeProcessVariables":true
@@ -31,12 +29,9 @@ angular.module('activitiApp').controller('InstancesCtrl', function ($scope, $roo
             });
         }
 
-
    }
 
  //   $scope.loadDefinitions(false);
-
-
     var processInstanceData =  function(instances){
         ProcessDefinitionService.get({latest: "true"}, function (data) {
             for (var i = 0; i < data.data.length; i++) {

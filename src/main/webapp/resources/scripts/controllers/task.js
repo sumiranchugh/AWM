@@ -1,18 +1,6 @@
 angular.module('activitiApp').controller("TasksCtrl", function ($scope, $rootScope, $location, ValidateUserService,
                                                                 TasksService, FormDataService, moment, $modal,
                                                                 TasksModalService, ProcessDefinitionService, GroupService) {
-/*    if((typeof $rootScope.loggedin== 'undefined' ||$rootScope.loggedin==false) ){
-        $rootScope.validateUser.then(function(){
-            if(!$rootScope.loggedin)
-                $location.path('/login');
-
-        },
-            $location.path('/login'));
-
-    } else{
-
-
-    }*/
 
     /**
      * involved
@@ -112,12 +100,9 @@ angular.module('activitiApp').controller("TasksCtrl", function ($scope, $rootSco
 
 
         }, function(){
-            consolelog("in task then fail");
+            console.log("in task then fail");
             $location.path('/login');
 
         }
         );
-
-
-
 });

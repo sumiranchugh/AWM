@@ -7,7 +7,7 @@ package org.rssb.awm.processes.listeners;
  */
 public enum LEVEL {
 
-    CENTER, AREA,ZONE;
+    AREA, ZONE,CENTER;
 
     int getIndex(){
      return  this.ordinal();
