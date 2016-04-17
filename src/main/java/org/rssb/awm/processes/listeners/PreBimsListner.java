@@ -120,7 +120,7 @@ public class PreBimsListner {
         }
         if (users.isEmpty())
             throw new ActivitiException("Users not found for task");
-        taskService.getIdentityLinksForTask("").forEach((p)->p.getGroupId());
+//        taskService.getIdentityLinksForTask("").forEach((p)->p.getGroupId());
         task.addCandidateUsers(users);
         System.out.println("in here");
     }
