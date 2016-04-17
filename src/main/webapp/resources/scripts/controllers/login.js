@@ -36,7 +36,7 @@ angular.module('activitiApp').controller('LoginCtrl', function ($scope, $http, U
     $scope.login =function() {
         $http(
         {method :'GET',
-            url : '/getLoggedInUser',
+            url : 'getLoggedInUser',
             headers :{ 'name' :$scope.username ,'pass' : $scope.password}
         }
             ).

@@ -63,16 +63,4 @@ public class TaskSubmitResource {
     }
 
 
-    public static void main(String[] args) {
-        System.out.println(solution(5,8));
-    }
-
-
-    static int solution(int m , int n){
-        int s =m;
-        for (int i = m+1; i <= n; i++) {
-           s=s^i;
-        }
-        return s;
-    }
 }
