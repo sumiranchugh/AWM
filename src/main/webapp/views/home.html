@@ -18,22 +18,15 @@
     <!-- build:css styles/main.css -->
     <link rel="stylesheet" href="resources/styles/main.css">
     <link rel="stylesheet" href="resources/styles/bootstrap.css">
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic'
+          rel='stylesheet' type='text/css'>
     <!-- endbuild -->
 </head>
 <body ng-app="activitiApp" ng-controller="RootCtrl">
-<!--[if lt IE 7]>
-<p class="chromeframe">You are using an outdated browser.
-    <a href="http://browsehappy.com/">Upgrade your browser today</a> or <a
-            href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience
-    this site.</p>
-<![endif]-->
 
-<!--[if lt IE 9]>
-  <!--<script src="components/es5-shim/es5-shim.js"></script>
-  <script src="components/json3/lib/json3.min.js"></script>-->
-<![endif]-->
-<div class="container" ng-show="loggedin">
-    <nav class="navbar navbar-default" role="navigation">
+
+<nav class="navbar navbar-default navbar-bhati navbar-static-top" role="navigation" ng-show="loggedin">
+    <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -47,44 +40,81 @@
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a ng-click="changeView('dashboard')"><span class="glyphicon glyphicon-home"></span>Dashboard</a>
-                </li>
-                <li><a ng-click="changeView('tasks')"><span class="glyphicon glyphicon-calendar"></span>My Tasks</a>
-                </li>
-                <li ng-show="any" class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-                        class="glyphicon glyphicon-list-alt"></span>Administer <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a ng-click="changeView('users')">Users</a></li>
-                        <li><a ng-click="changeView('groups')">Groups</a></li>
-                    </ul>
-                </li>
                 <li>
-                    <a ng-click="changeView('processes')" ng-show="any"><span class="glyphicon glyphicon-cog"></span>Processes</a>
-
+                    <img class="logo" src="img/rssbBlueLogo.jpg"/>
                 </li>
-                <li>
-                    <a ng-click="changeView('instances')"><span class="glyphicon glyphicon-play-circle"></span>Instances</a>
+                <li class="dropdown main-menu">
+                    <span class="zims-logo">ZIMS / </span><a href="#" class="dropdown-toggle" data-toggle="dropdown">Workflow
+                    App<span class="glyphicon glyphicon-menu-down"></span></a>
 
+                    <div class="dropdown-menu">
+                        <ul class="container">
+                            <li><a>Menu 1</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                            <li><a>Menu 2</a></li>
+                        </ul>
+                    </div>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li ng-show="loggedin" class="dropdown" ng-show="loggedin"><a href="#" class="dropdown-toggle"
-                                                                              data-toggle="dropdown"><span
-                        class="glyphicon glyphicon-user"></span>{{loggedUser.username }} <b
-                        class="caret"></b></a>
+                <li class="dropdown" ng-show="loggedin">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="glyphicon glyphicon-user"></span>
+                        {{loggedUser.firstName +' ' +loggedUser.lastName }}
+                        <span class="glyphicon glyphicon-menu-down"></span>
+                    </a>
                         <ul class="dropdown-menu">
-                        <li ng-show="any"><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
-                        <li ng-show="any"><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+                            <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
                         <li class="divider"></li>
-                        <li><form id="my_form" method="get" action="logout">
-                           <a href="javascript:{}" onclick="document.getElementById('my_form').submit();"> <span class="glyphicon glyphicon-off"></span>Logout</a></form></li>
+                            <li><a href="#" ng-click="logout()"><span class="glyphicon glyphicon-off"></span>Logout</a>
+                            </li>
                     </ul>
                 </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
-    </nav>
-</div>
+    </div>
+</nav>
+<nav class="navbar navbar-default navbar-lower" role="navigation" ng-show="loggedin">
+    <div class="container">
+        <ul class="side-menu">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
+                        class="glyphicon glyphicon-menu-hamburger"></span>Dashboard</a>
+
+                <div class="dropdown-menu">
+                    <ul>
+                        <li class="active"><a ng-click="changeView('dashboard')"><span
+                                class="glyphicon glyphicon-home"></span>Dashboard</a></li>
+                        <li><a ng-click="changeView('tasks')"><span class="glyphicon glyphicon-calendar"></span>My Tasks</a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle"><span class="glyphicon glyphicon-list-alt"></span>Administer
+                                <b class="caret"></b></a>
+                            <ul class="expand-menu">
+                                <li><a ng-click="changeView('users')">Users</a></li>
+                                <li><a ng-click="changeView('groups')">Groups</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a ng-click="changeView('processes')"><span class="glyphicon glyphicon-cog"></span>Processes</a>
+                        </li>
+                        <li>
+                            <a ng-click="changeView('instances')"><span class="glyphicon glyphicon-play-circle"></span>Instances</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
 
 <div ng-view></div>
 

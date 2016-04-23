@@ -42,19 +42,14 @@ import java.util.List;
 @Order(99)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Value("${bims.url}")
-    private String bimsUrl;
-
-
-    @Value("${bims.validatetoken}")
-    private String bimsValidateUrl;
-
-
-    @Value("${client.id}") // registeredUrl
-    private String clientId;
-
     @Autowired
     IdentityService identityService;
+    @Value("${bims.url}")
+    private String bimsUrl;
+    @Value("${bims.validatetoken}")
+    private String bimsValidateUrl;
+    @Value("${client.id}") // registeredUrl
+    private String clientId;
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
@@ -122,7 +117,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         @Override
         public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
-            response.sendRedirect("/");
+            response.sendRedirect("/login");
         }
 
         @Override
